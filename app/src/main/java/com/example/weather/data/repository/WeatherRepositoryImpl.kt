@@ -8,6 +8,7 @@ import com.example.weather.data.remote.WeatherApi
 import com.example.weather.domain.repository.WeatherRepository
 import com.example.weather.domain.util.Resource
 import com.example.weather.domain.weather.WeatherInfo
+import java.util.TimeZone
 import javax.inject.Inject
 
 class WeatherRepositoryImpl @Inject constructor(
@@ -25,7 +26,8 @@ class WeatherRepositoryImpl @Inject constructor(
             Resource.Success(
                 data = api.getWeatherData(
                     lat = lat,
-                    long = long
+                    long = long,
+                    timeZone = TimeZone.getDefault().id
                 ).toWeatherInfo()
             )
         } catch (e: Exception) {
