@@ -15,12 +15,14 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import java.time.format.DateTimeFormatter
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.math.roundToInt
 
 @Composable
 fun WeatherCard(
     state: WeatherState,
+    localityName: String,
     backgroundColor: Color,
     modifier: Modifier = Modifier
 ) {
@@ -36,16 +38,21 @@ fun WeatherCard(
                     .padding(16.dp),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    text = "Today ${
-                        data.time.format(
-                            DateTimeFormatter.ofPattern("HH:mm")
-                        )
-                    }",
-                    modifier = Modifier
-                        .align(Alignment.End),
-                    color = Color.White
-                )
+                Row(
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = localityName,
+                        color = Color.White
+                    )
+                    Text(
+                        text = "Today ${
+                            SimpleDateFormat("HH:mm", Locale.ROOT).format(Date())
+                        }",
+                        color = Color.White
+                    )
+                }
                 Spacer(modifier = Modifier.height(16.dp))
                 Image(
                     painter = painterResource(id = data.weatherType.iconRes),
