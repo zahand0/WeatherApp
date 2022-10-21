@@ -15,7 +15,9 @@ fun WeatherForecast(
     state: WeatherState,
     modifier: Modifier = Modifier
 ) {
-    state.weatherInfo?.weatherDataPerDay?.get(0)?.let { data ->
+    state.weatherInfo?.weatherDataPerDay?.get(0)?.filter {
+        it.time >= state.weatherInfo.currentWeatherData?.time
+    }?.let { data ->
         Column(
             modifier = modifier
                 .fillMaxWidth()
