@@ -22,45 +22,67 @@ class WeatherViewModel @Inject constructor(
     companion object {
         private const val TAG = "WeatherViewModel"
     }
-    
+
     var state by mutableStateOf(WeatherState())
         private set
 
-    fun loadWeatherInfo() {
+    var localityName by mutableStateOf("")
+        private set
+
+    fun loadAllInfo() {
         viewModelScope.launch {
             state = state.copy(
                 isLoading = true,
                 error = null
             )
             locationTracker.getCurrentLocation()?.let { location ->
-                when (val result = repository.getWeatherData(
-                    location.latitude,
-                    location.longitude
-                )) {
-                    is Resource.Error -> {
-                        Log.d("ViewModel", "loadWeatherInfo: FAILED INTERNET")
-                        state = state.copy(
-                            weatherInfo = null,
-                            isLoading = false,
-                            error = result.message
-                        )
-                    }
-                    is Resource.Success -> {
-                        state = state.copy(
-                            weatherInfo = result.data,
-                            isLoading = false,
-                            error = null
-                        )
-                    }
-                }
+                loadWeatherInfo(
+                    lat = location.latitude,
+                    long = location.longitude
+                )
+                loadLocalityName(
+                    lat = location.latitude,
+                    long = location.longitude
+                )
             } ?: kotlin.run {
                 Log.d("ViewModel", "loadWeatherInfo: GPS NOT ENABLED")
                 state = state.copy(
                     isLoading = false,
-                    error = "Couldn't retriver location. Make sure to grant permission and enable GPS."
+                    error = "Couldn't retrieve location. Make sure to grant permission and enable GPS."
                 )
             }
+        }
+    }
 
+    private suspend fun loadWeatherInfo(lat: Double, long: Double) {
+        when (val result = repository.getWeatherData(lat, long)) {
+            is Resource.Error -> {
+                Log.d("ViewModel", "loadWeatherInfo: FAILED INTERNET")
+                state = state.copy(
+                    weatherInfo = null,
+                    isLoading = false,
+                    error = result.message
+                )
+            }
+            is Resource.Success -> {
+                state = state.copy(
+                    weatherInfo = result.data,
+                    isLoading = false,
+                    error = null
+                )
+            }
+        }
+    }
+
+    private suspend fun loadLocalityName(lat: Double, long: Double) {
+        localityName = when (val result = repository.getLocality(lat, long)) {
+            is Resource.Error -> {
+                Log.d("ViewModel", "loadWeatherInfo: FAILED LOCALITY GETTER")
+                ""
+            }
+            is Resource.Success -> {
+                result.data ?: ""
+            }
         }
     }
 }
