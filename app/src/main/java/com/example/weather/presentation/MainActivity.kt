@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
         permissionLauncher = registerForActivityResult(
             ActivityResultContracts.RequestMultiplePermissions()
         ) {
-            viewModel.loadWeatherInfo()
+            viewModel.loadAllInfo()
         }
 
         permissionLauncher.launch(
@@ -52,6 +52,7 @@ class MainActivity : ComponentActivity() {
                     ) {
                         WeatherCard(
                             state = viewModel.state,
+                            localityName = viewModel.localityName,
                             backgroundColor = DeepBlue
                         )
                         Spacer(modifier = Modifier.height(16.dp))
