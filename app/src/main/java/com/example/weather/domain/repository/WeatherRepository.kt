@@ -7,4 +7,5 @@ interface WeatherRepository {
 
     suspend fun getWeatherData(lat: Double, long: Double): Resource<WeatherInfo>
 
+    suspend fun getLocality(lat: Double, long: Double): Resource<String>
 }
