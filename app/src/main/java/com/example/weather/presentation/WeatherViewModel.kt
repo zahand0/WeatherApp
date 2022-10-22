@@ -29,10 +29,18 @@ class WeatherViewModel @Inject constructor(
     var localityName by mutableStateOf("")
         private set
 
+    var isRefreshing by mutableStateOf(false)
+        private set
+
+    var isFirstLaunch by mutableStateOf(false)
+
     fun loadAllInfo() {
         viewModelScope.launch {
+            if (!isFirstLaunch) {
+                isRefreshing = true
+            }
             state = state.copy(
-                isLoading = true,
+                isLoading = isFirstLaunch,
                 error = null
             )
             locationTracker.getCurrentLocation()?.let { location ->
@@ -51,6 +59,8 @@ class WeatherViewModel @Inject constructor(
                     error = "Couldn't retrieve location. Make sure to grant permission and enable GPS."
                 )
             }
+            isRefreshing = false
+            isFirstLaunch = false
         }
     }
 
