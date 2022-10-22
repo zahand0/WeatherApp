@@ -4,6 +4,8 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,8 +15,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.weather.domain.util.weatherInfoExample
+import com.example.weather.domain.weather.WeatherData
+import com.example.weather.domain.weather.WeatherInfo
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.math.roundToInt
@@ -42,15 +48,28 @@ fun WeatherCard(
                     horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
-                    Text(
-                        text = localityName,
-                        color = Color.White
-                    )
+                    Row {
+                        Icon(
+                            imageVector = ImageVector.vectorResource(
+                                id = com.example.weather.R.drawable.ic_place
+                            ),
+                            contentDescription = null,
+                            tint = MaterialTheme.colors.onBackground,
+                            modifier = Modifier
+                                .size(25.dp)
+                        )
+                        Spacer(modifier = Modifier.width(2.dp))
+                        Text(
+                            text = localityName,
+                            color = MaterialTheme.colors.onBackground
+                        )
+                    }
+                    
                     Text(
                         text = "Today ${
                             SimpleDateFormat("HH:mm", Locale.ROOT).format(Date())
                         }",
-                        color = Color.White
+                        color = MaterialTheme.colors.onBackground
                     )
                 }
                 Spacer(modifier = Modifier.height(16.dp))
@@ -63,13 +82,13 @@ fun WeatherCard(
                 Text(
                     text = "${data.temperatureCelsius.roundToInt()}°C",
                     fontSize = 50.sp,
-                    color = Color.White
+                    color = MaterialTheme.colors.onBackground
                 )
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(
                     text = data.weatherType.weatherDesc,
                     fontSize = 20.sp,
-                    color = Color.White
+                    color = MaterialTheme.colors.onBackground
                 )
                 Spacer(modifier = Modifier.height(32.dp))
                 Row(
@@ -83,9 +102,9 @@ fun WeatherCard(
                         icon = ImageVector.vectorResource(
                             id = com.example.weather.R.drawable.ic_pressure
                         ),
-                        iconTint = Color.White,
+                        iconTint = MaterialTheme.colors.onBackground,
                         textStyle = TextStyle(
-                            color = Color.White
+                            color = MaterialTheme.colors.onBackground
                         )
                     )
                     WeatherDataDisplay(
@@ -94,9 +113,9 @@ fun WeatherCard(
                         icon = ImageVector.vectorResource(
                             id = com.example.weather.R.drawable.ic_drop
                         ),
-                        iconTint = Color.White,
+                        iconTint = MaterialTheme.colors.onBackground,
                         textStyle = TextStyle(
-                            color = Color.White
+                            color = MaterialTheme.colors.onBackground
                         )
                     )
                     WeatherDataDisplay(
@@ -105,9 +124,9 @@ fun WeatherCard(
                         icon = ImageVector.vectorResource(
                             id = com.example.weather.R.drawable.ic_wind
                         ),
-                        iconTint = Color.White,
+                        iconTint = MaterialTheme.colors.onBackground,
                         textStyle = TextStyle(
-                            color = Color.White
+                            color = MaterialTheme.colors.onBackground
                         )
                     )
                 }
