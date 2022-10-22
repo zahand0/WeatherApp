@@ -1,5 +1,5 @@
 # weather
-## For data used api.open-meteo.com API.
-### Used libraries: Compose, Retrofit, Coroutines, Dagger-Hilt
+## Used libraries: Compose, Retrofit, Coroutines, Dagger-Hilt
+### For data used api.open-meteo.com API.
 
-<img src="https://user-images.githubusercontent.com/103197485/197226284-0804963f-f6d8-44f2-9287-5f0abfbf188a.gif" width="50%" height="50%"/>
+<img src="https://user-images.githubusercontent.com/103197485/197336230-7f0337cd-494d-404d-b3f8-31da7c5cee13.gif" width="40%" height="40%"/>
