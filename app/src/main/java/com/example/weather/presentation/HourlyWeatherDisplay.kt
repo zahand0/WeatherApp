@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -21,7 +22,7 @@ import kotlin.math.roundToInt
 fun HourlyWeatherDisplay(
     weatherData: WeatherData,
     modifier: Modifier = Modifier,
-    textColor: Color = Color.White
+    textColor: Color = MaterialTheme.colors.onBackground
 ) {
     val formattedTime = remember(weatherData) {
         weatherData.time.format(
@@ -35,7 +36,7 @@ fun HourlyWeatherDisplay(
     ) {
         Text(
             text = formattedTime,
-            color = Color.LightGray
+            color = MaterialTheme.colors.onSurface
         )
         Image(
             painter = painterResource(id = weatherData.weatherType.iconRes),
