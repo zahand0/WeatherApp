@@ -1,4 +1,4 @@
-# Weather
+# Weather App
 ## Used libraries: Compose, Retrofit, Coroutines, Dagger-Hilt
 ### For data used api.open-meteo.com API.
 
